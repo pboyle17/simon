@@ -18,12 +18,14 @@
   </div>
 
   <div id="start">Start!</div>
+  <div id="play">play!</div>
 
   <script charset="utf-8">
     window.onload = function() {
       console.log('script is loaded');
       attachClickEventListeners();
       attachStartButtonEventListener();
+      attachPlayButtonEventListener();
     }
 
     var allTheSquares = document.getElementsByClassName('square');
@@ -56,6 +58,27 @@
       setTimeout(function(){
         selector.style.backgroundColor = 'gray';
       },2000);
+      addMouseOverEventListeners();
+    }
+
+    var button1sound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3');
+    var button2sound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3');
+    var button3sound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3');
+    var button4sound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3');
+
+    var playSound = function(buttonId){
+      if(buttonId=='1'){
+        button1sound.play();
+      }
+      else if (buttonId == '2') {
+        button2sound.play();
+      }
+      else if (buttonId == '3'){
+        button3sound.play();
+      }
+      else if (buttonId == '4'){
+        button4sound.play();
+      }
     }
 
     var sequence = [];
@@ -67,10 +90,40 @@
       console.log(sequence);
       console.log(randomSquareSelector);
       changeColor(randomSquareSelector);
+      playSound(randomSquareIdGenerator);
+
       randomSquareSelector.style.backgroundColor = 'orange';
+
     }
 
-    
+    var playButtonClickHandler = function(){
+      playSequence();
+    };
+
+    var playButtonSelector = document.getElementById('play');
+
+    var attachPlayButtonEventListener = function(){
+      playButtonSelector.addEventListener('click',playButtonClickHandler);
+      console.log('attached the play button click event listener');
+    };
+
+    var playSequence = function(){
+      console.log(sequence);
+
+    }
+
+    var addMouseOverEventListeners = function(){
+      for(var x = 0 ; x<allTheSquares.length;x++){
+        console.log(allTheSquares[x]);
+        allTheSquares[x].addEventListener('mouseenter',function(){
+          this.style.backgroundColor = 'red';
+        });
+        allTheSquares[x].addEventListener('mouseout',function(){
+          this.style.backgroundColor = 'gray';
+        });
+      }
+    };
+
   </script>
 </body>
 </html>
