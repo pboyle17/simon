@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>simon</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="square" id="1">1</div>
+      <div class="square" id="2">2</div>
+    </div>
+    <div class="row">
+      <div class="square" id="3">3</div>
+      <div class="square" id="4">4</div>
+    </div>
+  </div>
+
+  <div id="start">Start!</div>
+
+  <script charset="utf-8">
+    window.onload = function() {
+      console.log('script is loaded');
+      attachClickEventListeners();
+      attachStartButtonEventListener();
+    }
+
+    var allTheSquares = document.getElementsByClassName('square');
+
+    var clickHandler = function(){
+      console.log('you clicked',this);
+    }
+
+    var attachClickEventListeners = function(){
+      for(var x = 0;x<allTheSquares.length;x++){
+        allTheSquares[x].addEventListener('click',clickHandler);
+      }
+      console.log('attached all the square event listeners');
+    }
+
+    var startButtonClickHandler = function(){
+      console.log('the start button has been clicked',this);
+      generateSequence();
+    };
+
+    var startButtonSelector = document.getElementById('start');
+
+    var attachStartButtonEventListener = function(){
+      startButtonSelector.addEventListener('click',generateSequence);
+      console.log('attached the start button event listener');
+    }
+
+    var changeColor = function(selector){
+      selector.style.backgroundColor = 'orange';
+      setTimeout(function(){
+        selector.style.backgroundColor = 'gray';
+      },2000);
+    }
+
+    var sequence = [];
+    var generateSequence = function(){
+      var randomSquareIdGenerator = Math.floor(Math.random()*4+1).toString();
+      var randomSquareSelector = document.getElementById(randomSquareIdGenerator);
+      sequence.push(randomSquareSelector);
+
+      console.log(sequence);
+      console.log(randomSquareSelector);
+      changeColor(randomSquareSelector);
+      randomSquareSelector.style.backgroundColor = 'orange';
+    }
+
+    
+  </script>
+</body>
+</html>
