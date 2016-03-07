@@ -24,10 +24,6 @@ body {
   margin:0 auto;
 }
 
-.square:hover{
-  background-color:red;
-}
-
 #start {
   border:solid black 1px;
   border-radius:5px;
@@ -40,6 +36,12 @@ body {
 }
 
 #play {
+  border:solid black 1px;
+  border-radius:5px;
+  margin:20px auto;
+  text-align:center;
+}
+#test {
   border:solid black 1px;
   border-radius:5px;
   margin:20px auto;

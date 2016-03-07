@@ -19,6 +19,7 @@
 
   <div id="start">Start!</div>
   <div id="play">play!</div>
+  <div id="test">test!</div>
 
   <script charset="utf-8">
     window.onload = function() {
@@ -26,7 +27,26 @@
       attachClickEventListeners();
       attachStartButtonEventListener();
       attachPlayButtonEventListener();
+      attachTestButtonEventListener();
+      addMouseOverEventListeners();
     }
+
+    var testButtonClickHandler = function(){
+      console.log('why you click me bro?');
+    }
+
+    var testButtonSelector = document.getElementById('test');
+
+    var attachTestButtonEventListener = function(){
+      testButtonSelector.addEventListener('click',testButtonClickHandler);
+      console.log('attached the test Button listener');
+      testButtonSelector.addEventListener('mouseenter',function(){
+        this.style.backgroundColor = 'red';
+      });
+      testButtonSelector.addEventListener('mouseout',function(){
+        this.style.backgroundColor = 'gray';
+      });
+    };
 
     var allTheSquares = document.getElementsByClassName('square');
 
@@ -53,11 +73,28 @@
       console.log('attached the start button event listener');
     }
 
+    var assignColorFromId = function(id){
+      if (id == '1'){
+        return 'green';
+      }
+      else if (id == '2'){
+        return 'red';
+      }
+      else if (id == '3'){
+        return 'yellow';
+      }
+      else if (id == '4'){
+        return 'blue';
+      }
+    }
+
     var changeColor = function(selector){
-      selector.style.backgroundColor = 'orange';
+      var color;
+      color = assignColorFromId(selector.id);
+      selector.style.backgroundColor = color;
       setTimeout(function(){
         selector.style.backgroundColor = 'gray';
-      },1000);
+      },500);
       addMouseOverEventListeners();
     }
 
@@ -114,21 +151,24 @@
     };
 
     var playSequence = function(){
+      console.log('playing sequence');
       for (var i=0;i<sequence.length;i++) {
         (function(ind) {
           setTimeout(function()
           {
             changeColor(sequence[ind]);
             playSound(sequence[ind].id);
-          }, 2000 * (ind+1) );
+          }, 1000 * (ind+1) );
             })(i);
       }
     }
     var addMouseOverEventListeners = function(){
+      var color;
       for(var x = 0 ; x<allTheSquares.length;x++){
-        // console.log(allTheSquares[x]);
+        color = assignColorFromId(allTheSquares[x].id);
+        console.log(color);
         allTheSquares[x].addEventListener('mouseenter',function(){
-          this.style.backgroundColor = 'red';
+          this.style.backgroundColor = color;
         });
         allTheSquares[x].addEventListener('mouseout',function(){
           this.style.backgroundColor = 'gray';
