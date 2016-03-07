@@ -17,49 +17,38 @@
     </div>
   </div>
 
-  <div id="start">Start!</div>
+
   <div id="play">play!</div>
-  <div id="test">test!</div>
 
   <script charset="utf-8">
     window.onload = function() {
       console.log('script is loaded');
+
       attachClickEventListeners();
-      attachStartButtonEventListener();
       attachPlayButtonEventListener();
-      attachTestButtonEventListener();
       addMouseOverEventListeners();
     }
-
-    var testButtonClickHandler = function(){
-      console.log('why you click me bro?');
-    }
-
-    var testButtonSelector = document.getElementById('test');
-
-    var attachTestButtonEventListener = function(){
-      testButtonSelector.addEventListener('click',testButtonClickHandler);
-      console.log('attached the test Button listener');
-      testButtonSelector.addEventListener('mouseenter',function(){
-        this.style.backgroundColor = 'red';
-      });
-      testButtonSelector.addEventListener('mouseout',function(){
-        this.style.backgroundColor = 'gray';
-      });
-    };
-
     var allTheSquares = document.getElementsByClassName('square');
 
     var clickHandler = function(){
       playSound(this.id);
     }
 
+    var mouseenterHandler = function(){
+      var color = assignColorFromId(this.id);
+      this.style.backgroundColor = color;
+    }
+
+    var mouseoutHandler = function(){
+      this.style.backgroundColor = 'gray';
+    };
+
     var attachClickEventListeners = function(){
       for(var x = 0;x<allTheSquares.length;x++){
         allTheSquares[x].addEventListener('click',clickHandler);
       }
       console.log('attached all the square event listeners');
-    }
+    };
 
     var startButtonClickHandler = function(){
       console.log('the start button has been clicked',this);
@@ -67,11 +56,6 @@
     };
 
     var startButtonSelector = document.getElementById('start');
-
-    var attachStartButtonEventListener = function(){
-      startButtonSelector.addEventListener('click',generateSequence);
-      console.log('attached the start button event listener');
-    }
 
     var assignColorFromId = function(id){
       if (id == '1'){
@@ -120,20 +104,14 @@
 
     var sequence = [];
     var generateSequence = function(){
+      var color;
       var randomSquareIdGenerator = Math.floor(Math.random()*4+1).toString();
       var randomSquareSelector = document.getElementById(randomSquareIdGenerator);
       sequence.push(randomSquareSelector);
-
-      console.log(sequence);
-      console.log(randomSquareSelector);
-      changeColor(randomSquareSelector);
-      playSound(randomSquareIdGenerator);
-
-      randomSquareSelector.style.backgroundColor = 'orange';
-
-    }
+    };
 
     var playButtonClickHandler = function(){
+      generateSequence();
       playSequence();
     };
 
@@ -157,22 +135,22 @@
           setTimeout(function()
           {
             changeColor(sequence[ind]);
-            playSound(sequence[ind].id);
-          }, 1000 * (ind+1) );
+            playSound(sequence[ind].id,startTimer());
+          }, 700 * (ind+1) );
             })(i);
       }
+    };
+
+    var startTimer = function(){
+      console.log('starting timer');
     }
+
     var addMouseOverEventListeners = function(){
       var color;
       for(var x = 0 ; x<allTheSquares.length;x++){
         color = assignColorFromId(allTheSquares[x].id);
-        console.log(color);
-        allTheSquares[x].addEventListener('mouseenter',function(){
-          this.style.backgroundColor = color;
-        });
-        allTheSquares[x].addEventListener('mouseout',function(){
-          this.style.backgroundColor = 'gray';
-        });
+        allTheSquares[x].addEventListener('mouseenter',mouseenterHandler);
+        allTheSquares[x].addEventListener('mouseout',mouseoutHandler);
       }
     };
 
